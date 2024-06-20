@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    <!-- Additional styles can be added here if needed -->
+{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+
+  <!-- Featured Blog Post Section -->
+  {% if featured_post %}
+    <div class="text-center bg-light p-2 text-dark">
+      <h4>Featured Post</h4>
+    </div>
+    <div class="jumbotron mt-3 p-4 p-md-5 bg-dark text-white rounded">
+      {% for post in featured_post %}
+        {% if forloop.first %}
+          <div class="row">
+            <div class="col-md-6 px-0">
+              <h3 class="display-4 font-italic">{{ post.blog_title | truncatechars:50 }}</h3>
+              <p class="lead my-3">{{ post.short_description }}</p>
+              <p class="lead mb-0"><a href="{% url 'single_blog' post.blog_slug %}" class="text-white font-weight-bold">Read more...</a></p>
+            </div>
+            <div class="col-md-6">
+              <img src="{{ post.featured_image.url }}" class="img-fluid rounded" alt="Featured blog image" style="object-fit: cover; height: 250px; width: 100%;">
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Recent Blog Posts Section -->
+  {% if recent_posts %}
+    <div class="text-center bg-light p-2 text-dark mt-5">
+      <h4>Recent Posts</h4>
+    </div>
+    <div class="row my-4">
+      {% for post in recent_posts %}
+        <div class="col-lg-6 col-md-12 mb-3">
+          <div class="card shadow-sm h-100">
+            <img class="card-img-top" src="{{ post.featured_image.url }}" alt="Card image cap" style="object-fit: cover; height: 200px; width: 100%;">
+            <div class="card-body">
+              <h3 class="card-title">
+                <a class="text-dark" href="{% url 'single_blog' post.blog_slug %}">{{ post.blog_title| truncatechars:50 }}</a>
+              </h3>
+              <div class="mb-1 text-muted">{{ post.pub_date|date:"F j, Y" }}</div>
+              <p class="card-text">{{ post.short_description | truncatechars:150 }}</p>
+              <p class="card-text"><small class="text-muted">By {{ post.author }}</small></p>
+              <p class="card-text"><small class="text-muted">Created at {{ post.created_at|date:"F j, Y, g:i a" }}</small></p>
+              <a href="{% url 'single_blog' post.blog_slug %}" class="btn btn-dark">Continue reading</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

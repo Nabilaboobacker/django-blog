@@ -1,0 +1,80 @@
+/* Dashboard Specific Styles */
+.dashboard-outer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+}
+
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    overflow: hidden;
+}
+
+.dashboard-sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.dashboard-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.dashboard-sidebar ul li {
+    width: 100%;
+}
+
+.dashboard-sidebar ul li a {
+    text-decoration: none;
+    padding: 15px 20px;
+    display: block;
+    color: #000;
+}
+
+.dashboard-sidebar ul li a:hover {
+    background-color: #f0f0f0;
+}
+
+.dashboard-main-content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.dashboard-main-content section {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .dashboard-sidebar {
+        width: 100%;
+    }
+
+    .dashboard-sidebar ul {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .dashboard-sidebar ul li {
+        flex: 1 1 50%;
+        text-align: center;
+    }
+
+    .dashboard-sidebar ul li a {
+        padding: 15px 0;
+    }
+}
+

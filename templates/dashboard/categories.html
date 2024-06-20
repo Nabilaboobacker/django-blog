@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Categories{% endblock %}
+
+{% block styles %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/categories.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container dashboard-outer-container">
+  <div class="dashboard-container">
+    {% include 'dashboard/sidebar.html' %}
+    <main class="dashboard-main-content">
+      <section id="dashboard">
+        <h1>Category Details</h1>
+
+        <!-- Add Category Button -->
+        <div class="add-button">
+          <a href="{% url 'add_category' %}" class="btn border bg-light">Add</a>
+        </div>
+
+        <!-- Categories Table -->
+        <table class="dashboard-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for cat in categories %}
+            <tr>
+              <td>{{ cat.category }}</td>
+              <td>{{ cat.created_at }}</td>
+              <td>{{ cat.updated_at }}</td>
+              <td>
+                <!-- Edit Category Link -->
+                <a class="text-dark" href="{% url 'edit_categories' cat.id %}">
+                  <i class="fa fa-pencil"></i>
+                </a>
+                |
+                <!-- Delete Category Link -->
+                <a class="text-dark" href="{% url 'delete_categories' cat.id %}">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</div>
+{% endblock %}

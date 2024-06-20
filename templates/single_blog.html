@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Single Blog
+{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    <style>
+        /* Additional styles specific to this page */
+        .comment-section {
+            margin-top: 50px;
+        }
+
+        .comment-box {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <article>
+                <h1>{{ blog.blog_title }}</h1>
+                <p class="meta">{{ blog.author }} | {{ blog.created_at }}</p>
+                <img src="{{ blog.featured_image.url }}" alt="Sample Blog Image" class="img-fluid mb-3">
+                <p>{{ blog.description }}</p>
+            </article>
+
+            <div class="comment-section">
+                <h5>Comments ({{ comment_count }})</h5>
+
+                {% if comments %}
+                    {% for comment in comments %}
+                        <div class="comment-box border rounded p-2 mb-2">
+                            <p><strong>{{ comment.user }}</strong></p>
+                            <p>{{ comment.comment }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    <form action="{% url 'single_blog' blog.blog_slug %}" method="POST" class="comment-form mb-2">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <textarea id="text" placeholder="Enter your comment here!" name="comment" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-dark">Submit</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

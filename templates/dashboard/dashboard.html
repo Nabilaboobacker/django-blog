@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block styles %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container dashboard-outer-container">
+  <div class="dashboard-container">
+    {% include 'dashboard/sidebar.html' %}
+    <main class="dashboard-main-content">
+      <section id="dashboard">
+        <div class="ml-2">
+          <h2>Dashboard Overview</h2>
+          <table class="dashboard-table">
+            <thead>
+              <tr>
+                <th>Categories</th>
+                <th>Blogs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ category_count }}</td> <!-- Display the number of categories -->
+                <td>{{ blog_count }}</td> <!-- Display the number of blogs -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+{% endblock %}

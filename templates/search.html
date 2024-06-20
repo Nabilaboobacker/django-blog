@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Search Results
+{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    {% comment %} <link rel="stylesheet" href="{% static 'css/search.css' %}"> {% endcomment %}
+    <style>
+        /* Base styles */
+        .search-container {
+            max-width: 1000px;
+            margin:auto;
+            padding: 20px;
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #343a40;
+        }
+
+        .blog-results {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .blog-result {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .blog-result img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .blog-result img:hover {
+            transform: scale(1.05);
+        }
+
+        .blog-info {
+            flex: 1;
+        }
+
+        .blog-info h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: #007bff;
+        }
+
+        .blog-info h2 a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .blog-info h2 a:hover {
+            color: #0056b3;
+        }
+
+        .blog-info p {
+            margin: 5px 0;
+            color: #6c757d;
+        }
+
+        .meta {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        /* No results styling */
+        .no-results {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #dc3545;
+            margin-top: 20px;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .blog-result {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .blog-result img {
+                width: 80%;
+                height: auto;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .blog-info h2 {
+                text-align: center;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="search-container">
+    <h3>Search Results for "{{ search_keyword }}"</h3>
+
+    <ul class="blog-results">
+        {% for blog in blogs %}
+        <li>
+            <div class="blog-result">
+                <a href="{% url 'single_blog' blog.blog_slug %}">
+                    <img src="{{ blog.featured_image.url }}" alt="{{ blog.blog_title }}">
+                </a>
+                <div class="blog-info">
+                    <h2><a href="{% url 'single_blog' blog.blog_slug %}">{{ blog.blog_title }}</a></h2>
+                    <p>{{ blog.short_description }}</p>
+                    <p class="meta">By {{ blog.author }} - Created: {{ blog.created_at }}</p>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% if not blogs %}
+    <p class="no-results">No results found for "{{ search_keyword }}".</p>
+    {% endif %}
+</div>
+{% endblock %}

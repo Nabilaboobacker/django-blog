@@ -1,0 +1,21 @@
+<nav class="dashboard-sidebar">
+    <ul>
+        <li class="{% if request.path == '/dashboard/' %}bg-dark{% endif %}">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+        </li>
+        <li class="{% if 'categories' in request.path %}bg-dark{% endif %}">
+            <a href="{% url 'categories' %}">Categories</a>
+        </li>
+        <li class="{% if 'blogs' in request.path %}bg-dark {% endif %}">
+            <a href="{% url 'blogs' %}">Blogs</a>
+        </li>
+        {% if perms.auth.add_user %}
+        <li class="{% if 'users' in request.path %}bg-dark {% endif %}">
+            <a href="{% url 'user' %}">Users</a>
+        </li>
+        {% endif %}
+        <li>
+            <a href="{% url 'logout_view' %}">Logout</a>
+        </li>
+    </ul>
+</nav>

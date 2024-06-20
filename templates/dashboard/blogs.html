@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Blogs{% endblock %}
+{% block styles %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/blogs.css' %}">
+{% endblock %}
+{% block body %}
+<div class="container dashboard-outer-container">
+  <div class="dashboard-container">
+    {% include 'dashboard/sidebar.html' %}
+    <main class="dashboard-main-content">
+      <section id="dashboard">
+        <h1>Blog Details</h1>
+        <div class="add-button">
+          <a href="{% url 'add_blog' %}" class="btn bg-light border">Add Blog</a>
+        </div>
+        <table class="dashboard-table">
+          <thead>
+            <tr>
+              <th>Blog Title</th>
+              <th>Short Description</th>
+              <th>Category</th>
+              <th>Created At</th>
+              <th>Author</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for blog in blogs %}
+            <tr>
+              <td>{{ blog.blog_title | truncatechars:25 }}</td>
+              <td>{{ blog.short_description | truncatechars:60 }}</td>
+              <td>{{ blog.category }}</td>
+              <td>{{ blog.created_at }}</td>
+              <td>{{ blog.author }}</td>
+              <td>
+                <a class="text-dark" href="{% url 'edit_blog' blog.id %}">
+                  <i class="fa fa-pencil"></i>
+                </a> |
+                <a class="text-dark" href="{% url 'delete_blog' blog.id %}">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</div>
+{% endblock %}

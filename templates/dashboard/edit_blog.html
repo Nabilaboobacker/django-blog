@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Blog{% endblock %}
+
+{% block styles %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/edit_blog.css' %}">
+{% endblock %}
+
+{% block body %}
+{% load crispy_forms_tags %} 
+
+<div class="container dashboard-outer-container">
+  <div class="dashboard-container">
+    {% include 'dashboard/sidebar.html' %}
+    <main class="dashboard-main-content">
+      <section id="dashboard">
+        <div class="ml-5">
+          <h2>Edit Blog</h2>
+          <form action="{% url 'edit_blog' blog.id %}" method="POST" enctype="multipart/form-data" style="width: 400px;">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <input type="submit" class="btn border" value="Submit">
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+{% endblock %}

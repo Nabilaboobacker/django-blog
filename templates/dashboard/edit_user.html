@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block styles %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/edit_user.css' %}">
+{% endblock %}
+
+{% block body %}
+{% load crispy_forms_tags %} 
+
+<div class="container dashboard-outer-container">
+  <div class="dashboard-container">
+    {% include 'dashboard/sidebar.html' %}
+    <main class="dashboard-main-content">
+      <section id="dashboard">
+        {% if perms.auth.add_user %}
+        <div style="margin-left: 200px;">
+          <h2>Edit User</h2>
+          <form action="{% url 'edit_user' user.id %}" method="POST" style="width: 350px;">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <input type="submit" class="btn btn-border" value="Submit">
+          </form>
+        </div>
+        {% else %}
+        <h3 class="text-danger mb-5">Unauthorized access!</h3>
+        {% endif %}
+      </section>
+    </main>
+  </div>
+</div>
+{% endblock %}

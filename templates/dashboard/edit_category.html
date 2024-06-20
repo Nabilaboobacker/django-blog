@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Category{% endblock %}
+
+{% block styles %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/edit_category.css' %}">
+{% endblock %}
+
+{% block body %}
+{% load crispy_forms_tags %} 
+
+<div class="container dashboard-outer-container">
+  <div class="dashboard-container">
+    {% include 'dashboard/sidebar.html' %}
+    <main class="dashboard-main-content">
+      <section class="ml-5" id="dashboard">
+        <div class="mt-5">
+          <h2>Edit Category</h2>
+        </div>
+        <form action="{% url 'edit_categories' category.id %}" method="POST" style="width: 300px;">
+          {% csrf_token %}
+          {{ form | crispy }}
+          <input type="submit" class="btn btn-border" value="Submit">
+        </form>
+      </section>
+    </main>
+  </div>
+</div>
+
+{% endblock %}
